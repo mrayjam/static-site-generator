@@ -1,0 +1,8 @@
+node_modules/
+dist/
+site/
+coverage/
+.eslintcache
+*.log
+tests/temp-*
+.claude/
