@@ -1,5 +1,6 @@
 import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
+import globals from 'globals';
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -10,6 +11,9 @@ export default tseslint.config(
       parserOptions: {
         project: './tsconfig.json',
         tsconfigRootDir: import.meta.dirname,
+      },
+      globals: {
+        ...globals.node,
       },
     },
     rules: {
