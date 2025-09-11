@@ -5,4 +5,4 @@ coverage/
 .eslintcache
 *.log
 tests/temp-*
-.claude/
+
