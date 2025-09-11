@@ -3,7 +3,12 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import type { BuildOptions } from '../src/generator';
 
-// Mock all dependencies
+/**
+ * Mocks all dependencies for isolated testing.
+ *
+ * @remarks
+ * Required to test generator functionality without external dependencies.
+ */
 jest.mock('fs/promises');
 jest.mock('gray-matter');
 jest.mock('marked');
@@ -13,14 +18,18 @@ jest.mock('../src/highlighting');
 
 const mockFs = fs as jest.Mocked<typeof fs>;
 
-// Import after mocking
+/**
+ * Imports generator module after mocking dependencies.
+ *
+ * @remarks
+ * Import order is critical - mocks must be defined before importing modules that use them.
+ */
 import { buildSite } from '../src/generator';
 
 describe('Generator Module', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
-    // Setup default mocks
     const mockUtils = require('../src/utils');
     mockUtils.ensureDirectoryExists.mockResolvedValue(undefined);
     mockUtils.readDirectoryRecursive.mockResolvedValue([
@@ -64,7 +73,7 @@ describe('Generator Module', () => {
 
       await buildSite('/test/input', '/test/output', options);
 
-      expect(mockFs.writeFile).toHaveBeenCalledTimes(2); // Two markdown files
+      expect(mockFs.writeFile).toHaveBeenCalledTimes(2);
       expect(mockFs.writeFile).toHaveBeenCalledWith(
         expect.stringContaining('file1.html'),
         '<html>Mock HTML</html>',
@@ -136,7 +145,6 @@ describe('Generator Module', () => {
 
       await buildSite('/test/input', '/test/output', options);
 
-      // Should only process .md files
       expect(mockFs.writeFile).toHaveBeenCalledTimes(2);
     });
 
@@ -166,11 +174,15 @@ describe('Generator Module', () => {
 
       await buildSite('/test/input', '/test/output', options);
 
-      // Should complete without hanging (no watch mode)
       expect(true).toBe(true);
     });
 
-    // Note: Testing actual watch mode would require more complex mocking
-    // of the fs.watch functionality and is better suited for integration tests
+    /**
+     * Watch mode testing limitation.
+     *
+     * @remarks
+     * Testing actual watch mode would require complex mocking of fs.watch
+     * functionality and is better suited for integration tests.
+     */
   });
 });

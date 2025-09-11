@@ -1,7 +1,12 @@
 import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { setupPrismHighlighting, getThemeCssPath, getAvailableThemes } from '../src/highlighting';
 
-// Mock marked module
+/**
+ * Mocks the marked module for testing.
+ *
+ * @remarks
+ * Required to test highlighting functionality without external dependencies.
+ */
 const mockSetOptions = jest.fn();
 const mockRenderer = {
   code: jest.fn()
@@ -14,7 +19,12 @@ jest.mock('marked', () => ({
   }
 }));
 
-// Mock prismjs
+/**
+ * Mocks PrismJS for testing syntax highlighting.
+ *
+ * @remarks
+ * Provides controlled test environment for highlighting functionality.
+ */
 jest.mock('prismjs', () => ({
   languages: {
     javascript: { keyword: /\\b(?:function|var|let|const)\\b/ },
@@ -102,7 +112,6 @@ describe('Highlighting Module', () => {
     it('should create renderer with code highlighting', () => {
       setupPrismHighlighting('default');
 
-      // Simulate the renderer.code function being called
       const codeRenderer = mockRenderer.code;
       expect(codeRenderer).toBeDefined();
     });

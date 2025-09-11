@@ -9,24 +9,20 @@ describe('Integration Tests', () => {
   const testOutputDir = path.join(__dirname, 'temp-output');
 
   beforeEach(async () => {
-    // Create test directories
     await fs.mkdir(testInputDir, { recursive: true });
     await fs.mkdir(testOutputDir, { recursive: true });
   });
 
   afterEach(async () => {
-    // Clean up test directories
     try {
       await fs.rm(testInputDir, { recursive: true, force: true });
       await fs.rm(testOutputDir, { recursive: true, force: true });
     } catch {
-      // Ignore cleanup errors
     }
   });
 
   describe('Full build process', () => {
     it('should build a complete site from markdown files', async () => {
-      // Create test markdown files
       const testMarkdown1 = `---
 title: Test Page 1
 date: 2025-08-05
@@ -66,34 +62,28 @@ This page has minimal frontmatter.
       await fs.writeFile(path.join(testInputDir, 'page1.md'), testMarkdown1);
       await fs.writeFile(path.join(testInputDir, 'page2.md'), testMarkdown2);
 
-      // Create subdirectory with nested file
       const subDir = path.join(testInputDir, 'blog');
       await fs.mkdir(subDir);
       await fs.writeFile(path.join(subDir, 'nested.md'), `# Nested Page\n\nContent`);
 
-      // Build the site
       const options: BuildOptions = { theme: 'default' };
       await buildSite(testInputDir, testOutputDir, options);
 
-      // Verify output structure
       const outputFiles = await fs.readdir(testOutputDir);
       expect(outputFiles).toContain('page1.html');
       expect(outputFiles).toContain('page2.html');
       expect(outputFiles).toContain('assets');
 
-      // Verify nested structure
       const blogDir = path.join(testOutputDir, 'blog');
       const blogFiles = await fs.readdir(blogDir);
       expect(blogFiles).toContain('nested.html');
 
-      // Verify assets were copied
       const assetsDir = path.join(testOutputDir, 'assets');
       const assetFiles = await fs.readdir(assetsDir);
       expect(assetFiles).toContain('style.css');
       expect(assetFiles).toContain('prism.css');
       expect(assetFiles).toContain('prism.js');
 
-      // Verify HTML content
       const page1Content = await fs.readFile(path.join(testOutputDir, 'page1.html'), 'utf-8');
       expect(page1Content).toContain('<!DOCTYPE html>');
       expect(page1Content).toContain('<title>Test Page 1</title>');
@@ -115,7 +105,6 @@ This page has minimal frontmatter.
       const options: BuildOptions = { theme: 'okaidia' };
       await buildSite(testInputDir, testOutputDir, options);
 
-      // Verify theme-specific assets
       const prismCss = await fs.readFile(path.join(testOutputDir, 'assets', 'prism.css'), 'utf-8');
       expect(prismCss).toContain('okaidia'); // Theme-specific CSS should be present
 
@@ -128,7 +117,6 @@ This page has minimal frontmatter.
 
       await expect(buildSite(testInputDir, testOutputDir, options)).resolves.not.toThrow();
 
-      // Should still create output directory and assets
       const outputExists = await fs.access(testOutputDir).then(() => true).catch(() => false);
       expect(outputExists).toBe(true);
     });
@@ -157,7 +145,6 @@ This page has minimal frontmatter.
     });
 
     it('should preserve directory structure', async () => {
-      // Create nested directory structure
       const level1 = path.join(testInputDir, 'level1');
       const level2 = path.join(level1, 'level2');
       await fs.mkdir(level1, { recursive: true });
@@ -169,7 +156,6 @@ This page has minimal frontmatter.
       const options: BuildOptions = { theme: 'default' };
       await buildSite(testInputDir, testOutputDir, options);
 
-      // Verify nested structure is preserved
       const level1Output = path.join(testOutputDir, 'level1');
       const level2Output = path.join(level1Output, 'level2');
 
@@ -181,7 +167,6 @@ This page has minimal frontmatter.
     });
 
     it('should handle invalid markdown gracefully', async () => {
-      // Create file with malformed frontmatter
       const invalidMarkdown = `---
 title: Test
 invalid-yaml: [unclosed array
@@ -193,14 +178,12 @@ invalid-yaml: [unclosed array
 
       const options: BuildOptions = { theme: 'default' };
 
-      // Should not throw, but handle gracefully
       await expect(buildSite(testInputDir, testOutputDir, options)).resolves.not.toThrow();
     });
   });
 
   describe('Performance', () => {
     it('should handle multiple files efficiently', async () => {
-      // Create many test files
       const fileCount = 50;
       const promises = [];
 
@@ -228,10 +211,14 @@ Some content here.
       await buildSite(testInputDir, testOutputDir, options);
       const endTime = Date.now();
 
-      // Should complete in reasonable time (less than 10 seconds for 50 files)
+      /**
+       * Performance requirement: build should complete in reasonable time.
+       *
+       * @remarks
+       * Less than 10 seconds for 50 files ensures good developer experience.
+       */
       expect(endTime - startTime).toBeLessThan(10000);
 
-      // Verify all files were processed
       const outputFiles = await fs.readdir(testOutputDir);
       const htmlFiles = outputFiles.filter(f => f.endsWith('.html'));
       expect(htmlFiles).toHaveLength(fileCount);

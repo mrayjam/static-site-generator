@@ -3,7 +3,12 @@ import * as fs from 'fs/promises';
 import * as path from 'path';
 import { ensureDirectoryExists, readDirectoryRecursive, fileExists } from '../src/utils';
 
-// Mock fs module
+/**
+ * Mocks the fs module for isolated testing.
+ *
+ * @remarks
+ * Required to test file system operations without actual file system access.
+ */
 jest.mock('fs/promises');
 const mockFs = fs as jest.Mocked<typeof fs>;
 
@@ -82,7 +87,7 @@ describe('Utils Module', () => {
     it('should filter out non-files and non-directories', async () => {
       const mockEntries = [
         { name: 'file.md', isFile: () => true, isDirectory: () => false },
-        { name: 'symlink', isFile: () => false, isDirectory: () => false }, // Symlink or other
+        { name: 'symlink', isFile: () => false, isDirectory: () => false },
         { name: 'dir', isFile: () => false, isDirectory: () => true }
       ];
 
@@ -132,11 +137,14 @@ describe('Utils Module', () => {
   });
 
   describe('copyAssets integration', () => {
-    // Note: copyAssets is complex and would need more mocking
-    // This would test the integration with file system operations
+    /**
+     * Note: copyAssets requires integration testing.
+     *
+     * @remarks
+     * This function involves complex file system operations and PrismJS assets
+     * that are better tested in integration tests rather than unit tests.
+     */
     it('should be tested in integration tests', () => {
-      // Placeholder - this function requires extensive mocking
-      // of file system operations and PrismJS assets
       expect(true).toBe(true);
     });
   });

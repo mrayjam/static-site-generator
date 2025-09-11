@@ -75,7 +75,12 @@ describe('Template Module', () => {
 
       const result = renderTemplate(content, metadata);
 
-      // Should not crash and should handle gracefully
+      /**
+       * Template should handle invalid metadata gracefully without crashing.
+       *
+       * @remarks
+       * Ensures robust error handling for malformed input data.
+       */
       expect(result).toContain('<!DOCTYPE html>');
       expect(result).toContain('<p>Content</p>');
     });

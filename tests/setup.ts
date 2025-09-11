@@ -1,10 +1,14 @@
 import { jest, beforeEach, afterEach } from '@jest/globals';
 
-// Mock console methods to reduce noise in tests unless specifically testing them
+/**
+ * Mocks console methods to reduce noise in tests.
+ *
+ * @remarks
+ * This should not be used when tests are specifically checking console output.
+ */
 const originalConsole = global.console;
 
 beforeEach(() => {
-  // Reset console mocks before each test
   global.console = {
     ...originalConsole,
     log: jest.fn(),
@@ -15,9 +19,13 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  // Restore original console after each test
   global.console = originalConsole;
 });
 
-// Increase timeout for integration tests
+/**
+ * Increases timeout for integration tests.
+ *
+ * @remarks
+ * Integration tests may take longer due to file system operations.
+ */
 jest.setTimeout(30000);

@@ -109,7 +109,6 @@ async function watchForChanges(inputDir: string, outputDir: string, options: Bui
       console.log(chalk.blue(`[WATCH] File changed: ${filename}`));
       console.log(chalk.gray('Rebuilding...'));
 
-      // Fire and forget - don't await in callback
       buildSite(inputDir, outputDir, { ...options, watch: false }).catch(error => {
         console.error(chalk.red('[ERROR] Rebuild failed:'), error instanceof Error ? error.message : String(error));
       });
