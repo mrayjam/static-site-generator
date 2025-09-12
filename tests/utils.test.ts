@@ -12,6 +12,13 @@ import { ensureDirectoryExists, readDirectoryRecursive, fileExists } from '../sr
 jest.mock('fs/promises');
 const mockFs = fs as jest.Mocked<typeof fs>;
 
+/**
+ * Mocks the highlighting module to avoid marked dependency issues.
+ */
+jest.mock('../src/highlighting', () => ({
+  getThemeCssPath: jest.fn((theme: string) => `prismjs/themes/prism-${theme}.css`)
+}));
+
 describe('Utils Module', () => {
   beforeEach(() => {
     jest.clearAllMocks();

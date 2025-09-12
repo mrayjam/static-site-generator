@@ -2,24 +2,6 @@ import { describe, it, expect, jest, beforeEach } from '@jest/globals';
 import { setupPrismHighlighting, getThemeCssPath, getAvailableThemes } from '../src/highlighting';
 
 /**
- * Mocks the marked module for testing.
- *
- * @remarks
- * Required to test highlighting functionality without external dependencies.
- */
-const mockSetOptions = jest.fn();
-const mockRenderer = {
-  code: jest.fn()
-};
-
-jest.mock('marked', () => ({
-  marked: {
-    setOptions: mockSetOptions,
-    Renderer: jest.fn().mockImplementation(() => mockRenderer)
-  }
-}));
-
-/**
  * Mocks PrismJS for testing syntax highlighting.
  *
  * @remarks
@@ -27,14 +9,30 @@ jest.mock('marked', () => ({
  */
 jest.mock('prismjs', () => ({
   languages: {
-    javascript: { keyword: /\\b(?:function|var|let|const)\\b/ },
-    typescript: { keyword: /\\b(?:function|var|let|const|interface)\\b/ },
-    python: { keyword: /\\b(?:def|class|import)\\b/ }
+    javascript: { keyword: /\b(?:function|var|let|const)\b/ },
+    typescript: { keyword: /\b(?:function|var|let|const|interface)\b/ },
+    python: { keyword: /\b(?:def|class|import)\b/ }
   },
   highlight: jest.fn((code: string, grammar: unknown, language: string) => {
     return `<span class="highlighted">${code}</span>`;
   })
 }));
+
+/**
+ * Mocks the marked module for testing.
+ *
+ * @remarks
+ * Required to test highlighting functionality without external dependencies.
+ */
+jest.mock('marked', () => ({
+  marked: {
+    setOptions: jest.fn(),
+    Renderer: jest.fn().mockImplementation(() => ({
+      code: jest.fn()
+    }))
+  }
+}));
+
 
 describe('Highlighting Module', () => {
   beforeEach(() => {
@@ -43,9 +41,11 @@ describe('Highlighting Module', () => {
 
   describe('setupPrismHighlighting', () => {
     it('should setup marked with PrismJS renderer', () => {
+      const { marked } = require('marked');
+
       setupPrismHighlighting('default');
 
-      expect(mockSetOptions).toHaveBeenCalledWith({
+      expect(marked.setOptions).toHaveBeenCalledWith({
         renderer: expect.any(Object)
       });
     });
@@ -110,10 +110,11 @@ describe('Highlighting Module', () => {
 
   describe('Code highlighting functionality', () => {
     it('should create renderer with code highlighting', () => {
+      const { marked } = require('marked');
+
       setupPrismHighlighting('default');
 
-      const codeRenderer = mockRenderer.code;
-      expect(codeRenderer).toBeDefined();
+      expect(marked.Renderer).toHaveBeenCalled();
     });
   });
 });

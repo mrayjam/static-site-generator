@@ -10,8 +10,20 @@ import type { BuildOptions } from '../src/generator';
  * Required to test generator functionality without external dependencies.
  */
 jest.mock('fs/promises');
-jest.mock('gray-matter');
-jest.mock('marked');
+jest.mock('gray-matter', () => ({
+  __esModule: true,
+  default: jest.fn()
+}));
+jest.mock('marked', () => ({
+  marked: jest.fn()
+}));
+jest.mock('chalk', () => ({
+  blue: jest.fn((str) => str),
+  yellow: jest.fn((str) => str),
+  gray: jest.fn((str) => str),
+  green: jest.fn((str) => str),
+  red: jest.fn((str) => str)
+}));
 jest.mock('../src/template');
 jest.mock('../src/utils');
 jest.mock('../src/highlighting');
