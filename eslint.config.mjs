@@ -2,7 +2,7 @@ import eslint from '@eslint/js';
 import tseslint from 'typescript-eslint';
 import globals from 'globals';
 
-export default tseslint.config(
+export default [
   eslint.configs.recommended,
   ...tseslint.configs.recommended,
   ...tseslint.configs.recommendedTypeChecked,
@@ -17,7 +17,9 @@ export default tseslint.config(
       },
     },
     rules: {
-      // TypeScript specific rules
+      /**
+       * TypeScript specific rules
+       */
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/explicit-function-return-type': 'warn',
@@ -31,8 +33,12 @@ export default tseslint.config(
       '@typescript-eslint/prefer-readonly': 'warn',
       '@typescript-eslint/prefer-string-starts-ends-with': 'error',
 
-      // General rules
-      'no-console': 'off', // We want console logs for CLI output
+      /**
+       * General rules
+       *
+       * @remarks Console logging is allowed for CLI output
+       */
+      'no-console': 'off',
       'prefer-const': 'error',
       'no-var': 'error',
       'eqeqeq': 'error',
@@ -47,4 +53,4 @@ export default tseslint.config(
   {
     ignores: ['dist/**', 'node_modules/**'],
   }
-);
+];
