@@ -11,12 +11,18 @@ module.exports = {
     '^.+\\.(ts|tsx)$': [
       'ts-jest',
       {
-        useESM: true,
+        tsconfig: {
+          module: 'commonjs',
+        },
       },
     ],
   },
-  transformIgnorePatterns: ['node_modules/(?!(marked)/)'],
-  extensionsToTreatAsEsm: ['.ts'],
+  transformIgnorePatterns: [
+    'node_modules/(?!(marked|chalk)/)'
+  ],
+  moduleNameMapper: {
+    '^(\\.{1,2}/.*)\\.js$': '$1',
+  },
 
   collectCoverageFrom: [
     'src/**/*.{ts,tsx}',
