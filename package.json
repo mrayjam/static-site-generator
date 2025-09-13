@@ -20,11 +20,14 @@
     "format": "prettier --write src/**/*.ts",
     "format:check": "prettier --check src/**/*.ts",
     "type-check": "tsc --noEmit",
-    "test": "jest tests/template.test.ts",
+    "test": "jest",
     "test:template": "jest tests/template.test.ts",
-    "test:watch": "jest tests/template.test.ts --watch",
-    "test:coverage": "jest tests/template.test.ts --coverage",
-    "test:all": "jest",
+    "test:utils": "jest tests/utils.test.ts",
+    "test:highlighting": "jest tests/highlighting.test.ts",
+    "test:generator": "jest tests/generator.test.ts",
+    "test:integration": "jest tests/integration.test.ts",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
     "check-all": "npm run type-check && npm run lint && npm run format:check && npm run test"
   },
   "dependencies": {
@@ -59,6 +62,5 @@
     "prismjs",
     "ssg"
   ],
-  "author": "Aymane Bouljam",
-  "license": "MIT"
+  "author": "Aymane Bouljam"
 }
