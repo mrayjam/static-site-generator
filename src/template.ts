@@ -40,6 +40,10 @@ export function renderTemplate(content: string, metadata: PageMetadata): string 
 function renderMetadata(metadata: PageMetadata): string {
   const metadataElements: string[] = [];
 
+  if (metadata.description && typeof metadata.description === 'string') {
+    metadataElements.push(`<div class="metadata-item"><strong>Description:</strong> ${escapeHtml(metadata.description)}</div>`);
+  }
+
   if (metadata.date) {
     const formattedDate = new Date(metadata.date).toLocaleDateString();
     metadataElements.push(`<div class="metadata-item"><strong>Date:</strong> ${escapeHtml(formattedDate)}</div>`);
@@ -53,7 +57,7 @@ function renderMetadata(metadata: PageMetadata): string {
     const tagsHtml = metadata.tags
       .map(tag => `<span class="tag">${escapeHtml(String(tag))}</span>`)
       .join(' ');
-    metadataElements.push(`<div class="metadata-item"><strong>Tags:</strong> ${tagsHtml}</div>`);
+    metadataElements.push(`<div class="metadata-item tags-container"><strong>Tags:</strong> ${tagsHtml}</div>`);
   }
 
   if (metadataElements.length === 0) {
