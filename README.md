@@ -1,121 +1,139 @@
 # TypeScript Static Site Generator
 
-A powerful and lightweight static site generator built with TypeScript that transforms Markdown files into beautiful HTML pages with syntax highlighting support.
+A powerful TypeScript static site generator that converts Markdown files into HTML with syntax highlighting and multiple theme support.
 
-## Features
+## What it does
 
-- **Markdown Processing**: Full support for Markdown with frontmatter metadata
-- **Syntax Highlighting**: Built-in code syntax highlighting using PrismJS
-- **Theme Support**: Multiple syntax highlighting themes (dark, light, tomorrow)
-- **Watch Mode**: Development server with automatic rebuilding
-- **TypeScript**: Written entirely in TypeScript with strict type checking
-- **CLI Interface**: Simple command-line interface for easy usage
-- **Fast Builds**: Efficient file processing and HTML generation
+This tool transforms Markdown files with frontmatter into static HTML pages with:
+
+- **Markdown Processing**: Converts `.md` files to HTML with frontmatter support
+- **Syntax Highlighting**: Code blocks highlighted using PrismJS with 8 available themes
+- **Watch Mode**: Automatic rebuilding when files change during development
+- **Theme Support**: Multiple PrismJS themes (default, dark, funky, okaidia, twilight, coy, solarizedlight, tomorrow)
+- **Asset Management**: Automatically copies CSS and JavaScript assets
+- **CLI Interface**: Simple command-line tool for building sites
 
 ## Installation
 
-Clone the repository and build from source:
+Clone the repository and install dependencies:
 
 ```bash
 git clone https://github.com/aymanebouljam/static-site-generator.git
 cd static-site-generator
 npm install
+```
+
+Build the project:
+
+```bash
 npm run build
 ```
 
-## Usage
+## Commands
 
-### Basic Build
-
+### Development Commands
 ```bash
-npm run start -- build <input-dir> <output-dir>
-```
+# Build and watch for changes (recommended for development)
+npm run dev
 
-### Development Mode
-
-```bash
+# Build with watch mode and specific theme
 npm run dev:watch
+npm run dev:dark
+npm run dev:light
 ```
 
-### Theme Selection
-
+### Production Commands
 ```bash
-npm run dev:dark    # Dark theme
-npm run dev:light   # Light theme
+# Build the site once
+npm start
+
+# Build with specific themes
+npm start:dark
+npm start:light
 ```
 
-## Project Structure
+### Utility Commands
+```bash
+# Clean generated files
+npm run clean
+npm run clean:site
 
+# Code quality
+npm run lint
+npm run format
+npm run type-check
+npm run test
+
+# Run all checks
+npm run check-all
 ```
-content/           # Your Markdown files
-├── index.md
-├── about.md
-└── posts/
-    └── hello.md
 
-site/             # Generated HTML output
-├── index.html
-├── about.html
-└── posts/
-    └── hello.html
-```
+## Demo Example
 
-## Frontmatter Support
-
-Add metadata to your Markdown files using YAML frontmatter:
-
+1. **Create a Markdown file** (`content/blog.md`):
 ```markdown
 ---
-title: Hello World
-description: My first post
-date: 2025-07-28
+title: My First Post
+description: A sample blog post
+date: 2025-01-15
+tags: [typescript, markdown, ssg]
 ---
 
-# Hello World
+# My First Post
 
-Your content here...
+This is a sample blog post with **bold text** and *italic text*.
+
+## Code Example
+
+```typescript
+interface User {
+  name: string;
+  email: string;
+}
+
+const user: User = {
+  name: "John Doe",
+  email: "john@example.com"
+};
 ```
 
-## Development
+2. **Generate the site**:
+```bash
+npm run dev
+```
 
-### Prerequisites
+3. **View the result**: Open `site/blog.html` in your browser to see the generated HTML page with syntax highlighting and styling.
 
-- Node.js 18 or higher
-- TypeScript 5.0 or higher
+## Theme Usage
 
-### Available Scripts
+You can use different syntax highlighting themes by running specific commands:
 
 ```bash
-npm run build          # Build the project
-npm run dev            # Run in development mode
-npm run dev:watch      # Development with watch mode
-npm run dev:dark       # Development with dark theme
-npm run dev:light      # Development with tomorrow theme
-npm run start          # Run built CLI
-npm run clean          # Clean build and site directories
-npm run lint           # Run ESLint
-npm run format         # Format code with Prettier
-npm run test           # Run tests
-npm run type-check     # TypeScript type checking
-npm run check-all      # Run all checks (lint, format, test, types)
+# Use dark theme
+npm run dev:dark
+
+# Use light theme (tomorrow)
+npm run dev:light
+
+# Production builds with themes
+npm run start:dark
+npm run start:light
 ```
 
-## Configuration
+For custom themes, you can also use the built project directly:
+```bash
+npm run build
+node dist/cli/index.js build ./content ./site --theme okaidia
+node dist/cli/index.js build ./content ./site --theme funky --watch
+```
 
-The project uses TypeScript with strict mode enabled and includes:
+## Available Themes
 
-- ESLint for code linting with TypeScript support
-- Prettier for code formatting
-- Jest for comprehensive testing
-- PrismJS for syntax highlighting
-
-## Architecture
-
-The generator consists of several core modules:
-
-- **Generator**: Main site generation logic with Markdown processing
-- **Template**: HTML template rendering system
-- **Highlighting**: PrismJS syntax highlighting integration
-- **Utils**: File system utilities and helper functions
-- **CLI**: Command-line interface with Commander.js
-
+- `default` - Standard PrismJS theme
+- `dark` - Dark theme
+- `funky` - Colorful theme
+- `okaidia` - Okaidia theme
+- `twilight` - Twilight theme
+- `coy` - Coy theme
+- `solarizedlight` - Solarized Light theme
+- `tomorrow` - Tomorrow theme
