@@ -130,12 +130,17 @@ body {
   margin-right: 0.5rem;
 }
 
+.tags-container {
+  width: 100%;
+  text-align: center;
+}
+
 .tag {
   display: inline-block;
   background: linear-gradient(135deg, var(--accent-color), var(--primary-color));
   color: ${isDarkTheme ? 'white' : 'white'};
   padding: 0.3rem 0.8rem;
-  margin: 0 0.3rem 0.3rem 0;
+  margin: 0 0.3rem 0 0;
   border-radius: 20px;
   font-size: 0.8rem;
   font-weight: 600;
