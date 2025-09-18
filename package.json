@@ -1,11 +1,8 @@
 {
-  "name": "ts-ssg",
+  "name": "static-site-generator",
   "version": "1.0.0",
   "description": "A powerful TypeScript static site generator with Markdown support and syntax highlighting",
   "main": "dist/cli/index.js",
-  "bin": {
-    "ts-ssg": "dist/cli/index.js"
-  },
   "scripts": {
     "build": "tsc",
     "dev": "ts-node src/cli/index.ts build ./content ./site",
@@ -13,7 +10,9 @@
     "dev:dark": "ts-node src/cli/index.ts build ./content ./site --theme dark",
     "dev:light": "ts-node src/cli/index.ts build ./content ./site --theme tomorrow",
     "start": "node dist/cli/index.js build ./content ./site",
-    "clean": "rm -rf dist site",
+    "start:dark": "node dist/cli/index.js build ./content ./site --theme dark",
+    "start:light": "node dist/cli/index.js build ./content ./site --theme tomorrow",
+    "clean": "rm -rf dist site coverage",
     "clean:site": "rm -rf site",
     "lint": "eslint 'src/**/*.ts'",
     "lint:fix": "eslint 'src/**/*.ts' --fix",
