@@ -92,21 +92,19 @@ A closure gives you access to an outer function's scope from an inner function. 
 
 Here's a simple example that demonstrates closure behavior:
 
-```javascript
-function createCounter() {
-  let count = 0;
+    function createCounter() {
+      let count = 0;
 
-  return function() {
-    count++;
-    return count;
-  };
-}
+      return function() {
+        count++;
+        return count;
+      };
+    }
 
-const counter = createCounter();
-console.log(counter()); // 1
-console.log(counter()); // 2
-console.log(counter()); // 3
-```
+    const counter = createCounter();
+    console.log(counter()); // 1
+    console.log(counter()); // 2
+    console.log(counter()); // 3
 
 ## Real-World Applications
 
@@ -119,27 +117,25 @@ Closures are incredibly useful for:
 
 ## Advanced Pattern: Module Pattern
 
-```javascript
-const Calculator = (function() {
-  let result = 0;
+    const Calculator = (function() {
+      let result = 0;
 
-  return {
-    add: function(x) {
-      result += x;
-      return this;
-    },
-    multiply: function(x) {
-      result *= x;
-      return this;
-    },
-    getResult: function() {
-      return result;
-    }
-  };
-})();
+      return {
+        add: function(x) {
+          result += x;
+          return this;
+        },
+        multiply: function(x) {
+          result *= x;
+          return this;
+        },
+        getResult: function() {
+          return result;
+        }
+      };
+    })();
 
-// Usage: Calculator.add(5).multiply(3).getResult(); // 15
-```
+    // Usage: Calculator.add(5).multiply(3).getResult(); // 15
 
 > "Closures are not magic, they're just functions that remember the environment in which they were created." - Kyle Simpson
 
@@ -150,6 +146,7 @@ While closures are powerful, be mindful of memory usage. Variables referenced by
 ## Conclusion
 
 Mastering closures will significantly improve your JavaScript skills. Practice with different patterns and soon you'll be writing more sophisticated and maintainable code!
+```
 
 2. **Generate the site**:
 ```bash

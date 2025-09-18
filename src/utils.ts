@@ -188,8 +188,8 @@ body {
 
 .content blockquote {
   border-left: 4px solid var(--accent-color);
-  margin: 1.5rem 0;
-  padding: 1rem 1.5rem;
+  margin: 2.5rem 0;
+  padding: 1.5rem 2rem;
   background: ${isDarkTheme ? 'rgba(255,255,255,0.05)' : 'var(--code-bg)'};
   border-radius: 0 8px 8px 0;
   font-style: italic;
