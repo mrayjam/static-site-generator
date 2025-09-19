@@ -1,6 +1,6 @@
 import { PageMetadata } from './generator';
 
-export function renderTemplate(content: string, metadata: PageMetadata): string {
+export function renderTemplate(content: string, metadata: PageMetadata, assetsPath = './assets'): string {
   const title = typeof metadata.title === 'string' ? metadata.title : 'Untitled';
   const description = typeof metadata.description === 'string' ? metadata.description : '';
   const author = typeof metadata.author === 'string' ? metadata.author : '';
@@ -15,8 +15,8 @@ export function renderTemplate(content: string, metadata: PageMetadata): string 
     ${description ? `<meta name="description" content="${escapeHtml(String(description))}">` : ''}
     ${author ? `<meta name="author" content="${escapeHtml(String(author))}">` : ''}
     ${date ? `<meta name="date" content="${escapeHtml(date)}">` : ''}
-    <link rel="stylesheet" href="./assets/prism.css">
-    <link rel="stylesheet" href="./assets/style.css">
+    <link rel="stylesheet" href="${assetsPath}/prism.css">
+    <link rel="stylesheet" href="${assetsPath}/style.css">
 </head>
 <body>
     <header class="site-header">
@@ -32,7 +32,7 @@ export function renderTemplate(content: string, metadata: PageMetadata): string 
         <p>Created By Aymane Bouljam</p>
     </footer>
 
-    <script src="./assets/prism.js"></script>
+    <script src="${assetsPath}/prism.js"></script>
 </body>
 </html>`;
 }

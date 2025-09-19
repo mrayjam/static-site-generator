@@ -89,7 +89,11 @@ async function processMarkdownFile(filePath: string, inputDir: string, outputDir
 
   await ensureDirectoryExists(path.dirname(outputPath));
 
-  const finalContent = renderTemplate(htmlContent, metadata);
+  const outputRelativePath = path.relative(outputDir, outputPath);
+  const depth = outputRelativePath.split(path.sep).length - 1;
+  const assetsPath = depth > 0 ? '../'.repeat(depth) + 'assets' : './assets';
+
+  const finalContent = renderTemplate(htmlContent, metadata, assetsPath);
 
   return {
     content: finalContent,
