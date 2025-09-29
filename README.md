@@ -48,8 +48,8 @@ npm run dev:light
 npm start
 
 # Build with specific themes
-npm start:dark
-npm start:light
+npm run start:dark
+npm run start:light
 ```
 
 ### Utility Commands
